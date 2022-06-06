@@ -55,8 +55,16 @@
                         <input type="text" class="form-control" id="address" name="address" value="<%= post.address %>" tabindex="3" readonly>
                     </div>
                     <div class="mb-3">
-                        <label for="contents" class="form-label">내용</label>
-                        <textarea rows="10" class="form-control" id="contents" name="contents" tabindex="4" readonly><%= post.contents %></textarea>
+                      <label for="pay" class="form-label">금액</label>
+                      <input type="text" class="form-control" id="pay" name="pay" value="<%= post.pay %>" tabindex="4" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="point" class="form-label">신뢰도</label>
+                      <progress value= "5" max="100"></progress>
+                    </div>
+                    <div class="mb-3">
+                      <label for="contents" class="form-label">내용</label>
+                      <textarea rows="10" class="form-control" id="contents" name="contents" tabindex="5" readonly><%= post.contents %></textarea>
                     </div>
                     <a href="/community" class="btn btn-primary">목록으로</a>
                 </form>
