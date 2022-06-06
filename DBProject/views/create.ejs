@@ -48,8 +48,12 @@
                     <div class="mb-3">
                         <label for="category" class="form-label">카테고리</label>
                         <select type="text" class="form-control" id="category" name="category" tabindex="2" required>
-                          <option value="운반">운반</option>
-                          <option value="대리">대리</option>
+                          <option value="배달">배달</option>
+                          <option value="세탁">세탁</option>
+                          <option value="반려동물관리">반려동물관리</option>
+                          <option value="장보기">장보기</option>
+                          <option value="청소">청소</option>
+                          <option value="기타">기타</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -57,10 +61,14 @@
                         <input type="text" class="form-control" id="address" name="address" tabindex="3" required>
                     </div>
                     <div class="mb-3">
+                      <label for="pay" class="form-label">금액</label>
+                      <input type="text" class="form-control" id="pay" name="pay" tabindex="4" required>
+                  </div>
+                    <div class="mb-3">
                         <label for="contents" class="form-label">내용</label>
-                        <textarea rows="10" class="form-control" id="contents" name="contents" tabindex="4" required></textarea>
+                        <textarea rows="10" class="form-control" id="contents" name="contents" tabindex="5" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary" tabindex="5">글작성</button>
+                    <button type="submit" class="btn btn-primary" tabindex="6">글작성</button>
                     <a href="/community" class="btn btn-secondary">취소</a>
                 </form>
             </div>
