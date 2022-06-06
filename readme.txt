@@ -74,3 +74,5 @@ CREATE TABLE `post_state` (
   CONSTRAINT `post_state_ibfk_3` FOREIGN KEY (`roomid`) REFERENCES `chat_room` (`roomid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
+
+ALTER TABLE post ADD pay INT NOT NULL 
