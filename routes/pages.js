@@ -29,6 +29,7 @@ router.get("/profile", loggedIn, (req, res) => {
     }
 });
 
+
 router.get("/editProfile", loggedIn, (req, res) => {
     if (req.user) {
         res.render("editProfile", { status:"loggedIn", user: req.user });
@@ -42,6 +43,10 @@ router.get("/register", (req, res) => {
 });
 router.get("/login", (req, res) => {
     res.sendFile("login.html", { root: "./public/" });
+});
+
+router.get("/chat", (req, res) => {
+    res.sendFile("chat.html", { root: "./public/" });
 });
 
 router.get("/logout", logout)
