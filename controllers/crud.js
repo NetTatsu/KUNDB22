@@ -1,4 +1,6 @@
 const db = require("../routes/db-config");
+const dt = require("../routes/datetime");
+const result = dt.datetime();
 
 exports.save = (req, res) => {
     const title = req.body.title;
@@ -9,9 +11,10 @@ exports.save = (req, res) => {
     const pay = req.body.pay;
     const point = req.body.point;
     const image = req.file.path;
-    
+    const postdate = result;
+
     db.query('INSERT INTO post SET ?',
-    { title: title, category: category, address: address, contents: contents, userid: userid, pay: pay, point: point, image: image }
+    { title: title, category: category, address: address, contents: contents, userid: userid, pay: pay, point: point, image: image, postdate: postdate }
     , (error, results) => {
         if(error){
             console.log(error);
@@ -37,4 +40,22 @@ exports.update = (req, res) => {
         res.redirect('/community');
     }
   })
+}
+
+exports.chatsave = (req, res) => {
+    const nickname = req.body.nickname;
+    const message = req.body.message;
+    const chatid = req.body.postid;
+    const chattime = result;
+
+    db.query('INSERT INTO chatroom SET ?',
+    { nickname: nickname, message: message, chatid: chatid, chattime: chattime }
+    , (error, results) => {
+        if(error){
+            console.log(error);
+        } else {
+            res.redirect(req.get('referer')); // 자동 새로고침 
+            console.log(chatid);
+        }
+    }) 
 }

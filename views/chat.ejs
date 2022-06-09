@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>심부름마켓</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%if (user.userid==post.userid) {%>
+
+        <%if (post.state == "구인중") {%> 
+        <a class="btn-c" href="/state/<%= post.postid %>" onclick="return confirm('구인을 완료 하시겠습니까?')" class="btn btn-danger" style="margin-left: 15px;">구인 완료하기</a> 
+        <% } else { %> 
+        <a class="btn-c" href="#" class="btn btn-danger" style="margin-left: 15px;">구인 완료</a>
+        <%}%>
+
+    <%}%>
+    <form action="/chatsave" method="POST" class="wrapper">
+            <div class="user-container">
+                <input id="postid" name="postid" value="<%= post.postid %>" hidden>
+                <label for="nickname">대화명</label>
+                <input class="username" type="text" id="nickname" name="nickname" value="<%= user.userid %>" readonly>
+            </div>
+            <div class="display-container">
+                <ul class="chatting-list">
+                    <li class="sent">
+                    <% chatroom.forEach((chatroom)=> { %>
+                    <% if (post.postid === chatroom.chatid) { %>
+
+                    <% if (chatroom.nickname === user.userid) { %>
+                    <li class="chat-content"><%= chatroom.nickname %>: <%= chatroom.message %><span class="chattime"><%= chatroom.chattime %></span>
+                    <%} else {%>
+                    <li class="chat-content2"><%= chatroom.nickname %>: <%= chatroom.message %><span class="chattime"><%= chatroom.chattime %></span></li> 
+                    <% } %>
+
+                    <% } %>
+                    <% }) %>
+                    </li>
+                    <li class="received">
+                    </li>
+                </ul>
+            </div>
+            <div class="input-container">
+                <span>
+                    <label class="chatbar" for="message">내용입력</label>
+                    <input type="text" class="chatting-input" id="message" name="message">
+                    <button type="submit" class="send-button" onClick="window.location.reload()">전송</button>
+                    <a href="javascript:history.back();" class="check-button">목록으로</a>
+                    <!-- <a class="check-button" onClick="window.location.reload()" style="cursor: pointer;">채팅확인</a> -->
+                </span>
+            </div>    
+    </form>
+</body>
+</html>

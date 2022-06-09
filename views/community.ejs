@@ -40,21 +40,26 @@
       <table id="board" class="table table-bordered table-stirped text-center mt-4">
         <thead>
             <tr class="bg-primary text-white">
-              <th scope="col" style="width: 10%; text-align:center;">번호</th>
-              <th scope="col" style="width: 15%; text-align:center;">작성자</th>
+              <th scope="col" style="width: 11%; text-align:center;">작성일</th>
+              <th scope="col" style="width: 14%; text-align:center;">작성자</th>
               <th scope="col" style="width: 15%; text-align:center;">카테고리</th>
-              <th scope="col" style="width: 40%; text-align:center;">제목</th>
-              <th scope="col" style="width: 20%; text-align:center;">관리</th>
+              <th scope="col" style="width: 35%; text-align:center;">제목</th>
+              <th scope="col" style="width: 25%; text-align:center;">관리</th>
             </tr>
         </thead>
         <tbody>
           <% results.forEach((post)=> { %>
           <tr>
-            <td><%= post.postid %></td>
+            <td><%= post.postdate %></td>
             <td><%= post.userid %></td>
             <td><%= post.category %></td>
             <td><%= post.title %></td>
             <td>
+            <%if ( post.state=="구인완료" ){%>
+              <a href="#" class="btn btn-outline-danger"><%= post.state %></a>
+            <% } else { %>  
+              <a href="#" class="btn btn-outline-info"><%= post.state %></a>
+            <% } %>  
               <a href="/read/<%= post.postid %>" class="btn btn-outline-info">더보기</a>
             <%if (status=="loggedIn" && user.userid==post.userid ){%>  
               <a href="/edit/<%= post.postid %>" class="btn btn-outline-info"><i class="fa-solid fa-pen-to-square"></i></a>

@@ -29,7 +29,6 @@ router.get("/profile", loggedIn, (req, res) => {
     }
 });
 
-
 router.get("/editProfile", loggedIn, (req, res) => {
     if (req.user) {
         res.render("editProfile", { status:"loggedIn", user: req.user });
@@ -43,10 +42,6 @@ router.get("/register", (req, res) => {
 });
 router.get("/login", (req, res) => {
     res.sendFile("login.html", { root: "./public/" });
-});
-
-router.get("/chat", (req, res) => {
-    res.sendFile("chat.html", { root: "./public/" });
 });
 
 router.get("/logout", logout)
@@ -97,6 +92,22 @@ router.get('/delete/:postid', (req, res) => {
        } 
     }) 
 })
+// 게시글 상태
+router.get('/state/:postid', (req, res) => {
+    const postid = req.params.postid;
+    const state = "구인완료"
+    const userid = req.body.nickname;
+    db.query('UPDATE post SET ? WHERE postid= ?', [{ state: state }, [postid]], (error, results) => {
+        db.query('UPDATE member point = point+1 WHERE=?', [userid], (error, results) =>{
+            console.log(userid);
+        })
+        if (error) {
+            throw error;
+        } else {
+            res.redirect('/community');
+       } 
+    }) 
+})
 
 router.get('/read/:postid', loggedIn, (req, res) => {
     const postid = req.params.postid;
@@ -110,6 +121,35 @@ router.get('/read/:postid', loggedIn, (req, res) => {
       }
     })
 })
+
+// 채팅방 
+
+router.get('/chat/:postid', loggedIn, (req, res) => {
+    const postid = req.params.postid;
+    db.query('SELECT * FROM post WHERE postid=?;' + 'SELECT * FROM chatroom;' ,[postid, []] ,(error, results) => {
+        const [postid , chatroom] = results
+        if (error) {
+            throw error;
+        } else if(req.user) {
+            res.render('chat', {chatroom:chatroom, post:postid[0], status:"loggedIn", user: req.user});
+       } else {
+        res.render('chat', {chatroom:chatroom, post:postid[0], status: "no", user: "nothing"});
+      }
+   })
+    
+})
+
+router.get("/chatroom", loggedIn, (req, res) => {
+    db.query('SELECT * FROM chatroom', (error, results) => {
+        if(error) {
+            throw error;
+        } else if(req.user) {
+            res.send(results)
+        } else {
+            res.send(results)
+        }
+    })
+});
 
 // 이미지
 
@@ -145,6 +185,8 @@ const upload = multer({
 
 const crud = require("../controllers/crud");
 router.post('/save', upload.single('image'), crud.save);
-router.post('/update', upload.single('image'),crud.update);
+router.post('/update', upload.single('image'), crud.update);
+//채팅방
+router.post('/chatsave', crud.chatsave);
 
 module.exports = router;
